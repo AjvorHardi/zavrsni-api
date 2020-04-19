@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Gradebook::class, function (Faker $faker) {
     return [
-        'title' => $faker->unique()->numerify('IV #'),
+        'title' => $faker->unique()->numerify('IV ##'),
         'teacher_id' => null        
     ];
 });

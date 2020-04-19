@@ -20,9 +20,9 @@ class GradebookController extends Controller
         $take = request()->input('take', Gradebook::get()->count());
 
         if ($term) {
-            return Gradebook::with('teacher', 'student')->search($term)->skip($skip)->take($take)->get();
+            return Gradebook::with('teacher', 'student', 'comment')->search($term)->skip($skip)->take($take)->get();
         } else {
-            return Gradebook::with('teacher', 'student')->skip($skip)->take($take)->get();
+            return Gradebook::with('teacher', 'student', 'comment')->skip($skip)->take($take)->get();
         }
         
 
@@ -49,6 +49,10 @@ class GradebookController extends Controller
         $request->validate([
             'title' => 'required | min:2 | max:255'
         ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+    }
 
         $gradebook = new Gradebook();
 

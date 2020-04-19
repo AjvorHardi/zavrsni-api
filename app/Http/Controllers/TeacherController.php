@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Teacher;
 use App\Image;
 use Illuminate\Support\Facades\Auth;
+use JWTAuth;
 
 class TeacherController extends Controller
 {
@@ -48,12 +49,19 @@ class TeacherController extends Controller
             'lastName' => 'required | max:255'
         ]);
 
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+        
         $teacher = new Teacher();
+
+        
+        // \Log::info( Auth::user()->id);
+        // \Log::info( JWTAuth::user()->id);
+        
 
         $teacher->firstName = $request->input('firstName');
         $teacher->lastName = $request->input('lastName');
-        // $teacher->user_id = Auth::user()->id;
-        $teacher->gradebook_id = $request->input('gradebook_id');
 
         $teacher->save();
 

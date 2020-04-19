@@ -17,10 +17,10 @@ class CreateTeachersTable extends Migration
             $table->increments('id');
             $table->string('firstName');
             $table->string('lastName');
-            $table->unsignedInteger('gradebook_id')->nullable();
-            $table->foreign('gradebook_id')
+            $table->unsignedInteger('user_id')->nullable();
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('teachers')
+                ->on('users')
                 ->onDelete('cascade');
             $table->timestamps();
         });

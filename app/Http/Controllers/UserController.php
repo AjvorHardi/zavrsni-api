@@ -35,9 +35,12 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
+        
+        \Log::info($validator->errors()->toJson());
 
+        
         if($validator->fails()){
-                return response()->json($validator->errors()->toJson(), 400);
+                return response()->json($validator->errors(), 400);
         }
 
         $user = User::create([
@@ -47,6 +50,7 @@ class UserController extends Controller
             'password' => Hash::make($request->get('password'))
         ]);
         \Log::info($user->id);
+       
         $teacher = Teacher::create([
             'firstName' => $request->get('firstName'),
             'lastName' => $request->get('lastName'),
